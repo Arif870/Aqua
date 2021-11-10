@@ -9,7 +9,7 @@
   font-family: poppins !important;
 }
 .css-1vy8li4 a:hover {
-  border-bottom: 2px solid var(--primary-color);
+  color: var(--primary-color);
 }
 .css-6hp17o-MuiList-root-MuiMenu-list li {
   color: var(--secondary-color);

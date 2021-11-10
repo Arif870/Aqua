@@ -26,32 +26,36 @@ export default function Navigation() {
   };
   return (
     <React.Fragment>
-      <Container>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            textAlign: "center",
-            marginTop: "15px",
-          }}
-        >
-          <Link to="/">
-            <Typography sx={{ minWidth: 100 }}>Home</Typography>
-          </Link>
-          <Link to="/registration">
-            <Typography sx={{ minWidth: 100 }}>Registration</Typography>
-          </Link>
-          <Link to="/login">
-            <Typography sx={{ minWidth: 100 }}>Login</Typography>
-          </Link>
+      <div
+        style={{ borderBottom: "1px solid lightgray", paddingBottom: "10px" }}
+      >
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              textAlign: "center",
+              marginTop: "15px",
+            }}
+          >
+            <Link to="/">
+              <Typography sx={{ minWidth: 100 }}>Home</Typography>
+            </Link>
+            <Link to="/registration">
+              <Typography sx={{ minWidth: 100 }}>Registration</Typography>
+            </Link>
+            <Link to="/login">
+              <Typography sx={{ minWidth: 100 }}>Login</Typography>
+            </Link>
 
-          <Tooltip title="Account settings" style={{ marginLeft: "auto" }}>
-            <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-            </IconButton>
-          </Tooltip>
-        </Box>
-      </Container>
+            <Tooltip title="Account settings" style={{ marginLeft: "auto" }}>
+              <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              </IconButton>
+            </Tooltip>
+          </Box>
+        </Container>
+      </div>
       <Menu
         anchorEl={anchorEl}
         open={open}
