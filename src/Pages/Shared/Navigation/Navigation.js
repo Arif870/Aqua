@@ -1,258 +1,117 @@
-import React from "react";
-import AppBar from "@mui/material/AppBar";
+import * as React from "react";
 import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
+import Avatar from "@mui/material/Avatar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
-import logo from "../../../images/logo.png";
+import Tooltip from "@mui/material/Tooltip";
+import PersonAdd from "@mui/icons-material/PersonAdd";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
-import { Container, List, ListItem } from "@mui/material";
-import Drawer from "@mui/material/Drawer";
+import { Container } from "@mui/material";
 import "./Navigation.css";
-import useAuth from "../../../Hooks/useAuth";
 
 export default function Navigation() {
-  const { user, userLogOut, admin } = useAuth();
-  const [state, setState] = React.useState({
-    left: false,
-  });
-
-  const toggleDrawer = (anchor, open) => event => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
   };
-
-  const list = anchor => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <List>
-        {user?.displayName && (
-          <img
-            style={{
-              width: "60px",
-              height: "60px",
-              borderRadius: "50%",
-              margin: "auto",
-              display: "block",
-              border: "2px solid var(--primary-color)",
-              marginTop: "20px",
-            }}
-            src={user.photoURL}
-            alt=""
-          />
-        )}
-        {user?.email && (
-          <Typography
-            style={{
-              color: "var(--body-text-color)",
-              fontWeight: "lightt",
-              textAlign: "center",
-              marginTop: "5px",
-              fontSize: "12px",
-            }}
-          >
-            {user.email}
-          </Typography>
-        )}
-        {user?.displayName && (
-          <Typography
-            variant="h6"
-            style={{
-              color: "var(--primary-color)",
-              fontWeight: "bold",
-              textAlign: "center",
-              marginTop: "10px",
-            }}
-          >
-            {user.displayName}
-          </Typography>
-        )}
-        <Link to="/" style={{ textDecoration: "none", color: "#333" }}>
-          <ListItem>
-            <i
-              className="fas fa-home"
-              style={{ marginRight: "20px", color: "var(--primary-color)" }}
-            ></i>{" "}
-            Home
-          </ListItem>
-        </Link>
-        {user.email && (
-          <Box>
-            <Link
-              to="/dashboard"
-              style={{ textDecoration: "none", color: "#333" }}
-            >
-              <ListItem>
-                <i
-                  className="fas fa-tachometer-alt"
-                  style={{ marginRight: "20px", color: "var(--primary-color)" }}
-                ></i>{" "}
-                Dashboard
-              </ListItem>
-            </Link>
-            {admin && (
-              <Box style={{ marginLeft: "30px" }}>
-                <Link
-                  to="/addDoctor"
-                  style={{ textDecoration: "none", color: "#333" }}
-                >
-                  <ListItem>
-                    <i
-                      className="fas fa-user-md"
-                      style={{
-                        marginRight: "20px",
-                        color: "var(--primary-color)",
-                      }}
-                    ></i>{" "}
-                    Add a doctor
-                  </ListItem>
-                </Link>
-                <Link
-                  to="/makeAdmin"
-                  style={{ textDecoration: "none", color: "#333" }}
-                >
-                  <ListItem>
-                    <i
-                      className="fas fa-user-tie"
-                      style={{
-                        marginRight: "20px",
-                        color: "var(--primary-color)",
-                      }}
-                    ></i>{" "}
-                    Make Admin
-                  </ListItem>
-                </Link>
-              </Box>
-            )}
-          </Box>
-        )}
-        <Link
-          to="/appointment"
-          style={{ textDecoration: "none", color: "#333" }}
-        >
-          <ListItem>
-            <i
-              className="fas fa-calendar-check"
-              style={{ marginRight: "20px", color: "var(--primary-color)" }}
-            ></i>
-            Appointment
-          </ListItem>
-        </Link>
-
-        {user?.email ? (
-          <Link to="/login" style={{ textDecoration: "none", color: "#333" }}>
-            <ListItem onClick={userLogOut}>
-              <i
-                className="fas fa-sign-in-alt"
-                style={{ marginRight: "20px", color: "var(--primary-color)" }}
-              ></i>
-              LogOut
-            </ListItem>
-          </Link>
-        ) : (
-          <Link to="/login" style={{ textDecoration: "none", color: "#333" }}>
-            <ListItem>
-              <i
-                className="fas fa-sign-in-alt"
-                style={{ marginRight: "10px", color: "var(--primary-color)" }}
-              ></i>
-              Login
-            </ListItem>
-          </Link>
-        )}
-      </List>
-    </Box>
-  );
-
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <div>
+    <React.Fragment>
       <Container>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar
-            position="static"
-            sx={{ backgroundColor: "#ffffff", boxShadow: 0 }}
-          >
-            <Toolbar>
-              {["left"].map(anchor => (
-                <React.Fragment key={anchor}>
-                  <Button onClick={toggleDrawer(anchor, true)}>
-                    <MenuIcon />
-                  </Button>
-                  <Drawer
-                    anchor={anchor}
-                    open={state[anchor]}
-                    onClose={toggleDrawer(anchor, false)}
-                  >
-                    {list(anchor)}
-                  </Drawer>
-                </React.Fragment>
-              ))}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            textAlign: "center",
+            marginTop: "15px",
+          }}
+        >
+          <Link to="/">
+            <Typography sx={{ minWidth: 100 }}>Home</Typography>
+          </Link>
+          <Link to="/registration">
+            <Typography sx={{ minWidth: 100 }}>Registration</Typography>
+          </Link>
+          <Link to="/login">
+            <Typography sx={{ minWidth: 100 }}>Login</Typography>
+          </Link>
 
-              <Typography
-                component="div"
-                sx={{ flexGrow: 1, textAlign: "center" }}
-              >
-                <Box sx={{ marginY: "20px" }}>
-                  <Link to="/">
-                    {" "}
-                    <img src={logo} alt="logo" />
-                  </Link>
-                </Box>
-              </Typography>
-
-              {user?.email ? (
-                <Link to="/login" style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    onClick={userLogOut}
-                    style={{
-                      backgroundColor: "var(--secondary-color)",
-                      fontWeight: "bold",
-                      display: "block",
-                    }}
-                  >
-                    LogOut{" "}
-                    <i
-                      className="fas fa-sign-in-alt"
-                      style={{ marginLeft: "10px" }}
-                    ></i>
-                  </Button>
-                </Link>
-              ) : (
-                <Link to="/login" style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    style={{
-                      backgroundColor: "var(--secondary-color)",
-                      fontWeight: "bold",
-                      display: "block",
-                    }}
-                  >
-                    Login{" "}
-                    <i
-                      className="fas fa-sign-in-alt"
-                      style={{ marginLeft: "10px" }}
-                    ></i>
-                  </Button>
-                </Link>
-              )}
-            </Toolbar>
-          </AppBar>
+          <Tooltip title="Account settings" style={{ marginLeft: "auto" }}>
+            <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
+              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            </IconButton>
+          </Tooltip>
         </Box>
       </Container>
-    </div>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+            mt: 1.5,
+            "& .MuiAvatar-root": {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            "&:before": {
+              content: '""',
+              display: "block",
+              position: "absolute",
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem>
+          <Avatar /> Profile
+        </MenuItem>
+        <MenuItem>
+          <Avatar /> My account
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ListItemIcon>
+            <PersonAdd fontSize="small" />
+          </ListItemIcon>
+          Add another account
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+    </React.Fragment>
   );
 }

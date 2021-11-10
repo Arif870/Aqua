@@ -1,21 +1,11 @@
 import { Container, Grid } from "@mui/material";
 import React from "react";
 import Typography from "@mui/material/Typography";
-import logo from "../../../images/logo.png";
-import footerbg from "../../../images/footerbg.png";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div
-      style={{
-        backgroundImage: `url(${footerbg})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        display: "block",
-        marginTop: "100px",
-      }}
-    >
+    <div>
       <Container>
         <Grid
           sx={{ color: "white", p: 4 }}
@@ -24,13 +14,6 @@ export default function Footer() {
           columns={{ xs: 4, sm: 12, md: 12 }}
         >
           <Grid item xs={2} sm={4} md={3}>
-            <Link to="/">
-              <img
-                style={{ marginLeft: "10px", display: "block" }}
-                src={logo}
-                alt="logo"
-              />
-            </Link>
             <Typography sx={{ m: 2 }} variant="p" component="div">
               Emergincey care
             </Typography>
