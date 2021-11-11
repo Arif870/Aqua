@@ -4,6 +4,7 @@ import Navigation from "../../Shared/Navigation/Navigation";
 import Banner from "../Banner/ Banner";
 import Products from "../Products/Products";
 import Review from "../Review/Review";
+import Video from "../Video/Video";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Banner />
       <Products />
       <Review />
+      <Video />
       <Footer />
     </div>
   );
