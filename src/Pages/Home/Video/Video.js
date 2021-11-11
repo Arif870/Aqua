@@ -27,9 +27,9 @@ export default function Video() {
           style={{ borderRadius: "10px", boxShadow: "3px 4px 10px #10715d2e" }}
           src="https://www.youtube.com/embed/PtdiSqAbfpQ"
           title="YouTube video player"
-          frameborder="0"
+          frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
+          allowFullScreen
         ></iframe>
       </Container>
     </div>

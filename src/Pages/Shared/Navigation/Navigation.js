@@ -12,10 +12,13 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
-import { Container } from "@mui/material";
+import { Button, Container } from "@mui/material";
 import "./Navigation.css";
+import useAuth from "../../../Hooks/useAuth";
 
 export default function Navigation() {
+  const { user, logoutUser } = useAuth();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = event => {
@@ -41,9 +44,13 @@ export default function Navigation() {
             <Link to="/registration">
               <Typography sx={{ minWidth: 100 }}>Registration</Typography>
             </Link>
-            <Link to="/login">
-              <Typography sx={{ minWidth: 100 }}>Login</Typography>
-            </Link>
+            {user?.email ? (
+              <Button onClick={logoutUser}>LogOut</Button>
+            ) : (
+              <Link to="/login">
+                <Typography sx={{ minWidth: 100 }}>Login</Typography>
+              </Link>
+            )}
 
             <Tooltip title="Account settings" style={{ marginLeft: "auto" }}>
               <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>

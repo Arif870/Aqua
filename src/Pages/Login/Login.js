@@ -1,12 +1,40 @@
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { useHistory, useLocation } from "react-router";
+import {
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import googleimg from "../../images/google_logo.png";
 import "./Login.css";
 import Navigation from "../Shared/Navigation/Navigation";
 import Footer from "../Shared/Footer/Footer";
 import betaimg from "../../images/batta.png";
+import useAuth from "../../Hooks/useAuth";
 
 export default function Login() {
+  const { loginUser, isLoading } = useAuth();
+  const [loginData, setLoginData] = useState({});
+  const history = useHistory();
+  const location = useLocation();
+
+  const handleOnChange = e => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newLoginData = { ...loginData };
+    newLoginData[field] = value;
+    setLoginData(newLoginData);
+  };
+
+  const handleLoginSubmit = e => {
+    loginUser(loginData.email, loginData.password, history, location);
+    console.log("clicked");
+    e.preventDefault();
+  };
+
   return (
     <>
       <Navigation />
@@ -43,7 +71,11 @@ export default function Login() {
             >
               Please Login
             </Typography>
-            <form className="loginformsizecontrol" style={{ width: "500px" }}>
+            <form
+              onSubmit={handleLoginSubmit}
+              className="loginformsizecontrol"
+              style={{ width: "500px" }}
+            >
               <TextField
                 style={{ width: "100%", marginBottom: "20px" }}
                 id="login_email"
@@ -51,6 +83,7 @@ export default function Login() {
                 type="email"
                 name="email"
                 variant="filled"
+                onChange={handleOnChange}
               />
               <TextField
                 style={{ width: "100%" }}
@@ -59,6 +92,7 @@ export default function Login() {
                 type="password"
                 name="password"
                 variant="filled"
+                onChange={handleOnChange}
               />
               <Typography
                 variant="p"

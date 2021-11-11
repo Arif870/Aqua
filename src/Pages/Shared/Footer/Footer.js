@@ -32,7 +32,6 @@ export default function Footer() {
           <Grid item xs={2} sm={4} md={3}>
             <Typography
               sx={{ m: 2, color: "var(--primary-color)", fontWeight: "bold" }}
-              variant="h6"
               component="div"
             >
               Food Quality
@@ -57,7 +56,6 @@ export default function Footer() {
           <Grid item xs={2} sm={4} md={3}>
             <Typography
               sx={{ m: 2, color: "var(--primary-color)", fontWeight: "bold" }}
-              variant="h6"
               component="div"
             >
               Fish Quality
@@ -81,7 +79,6 @@ export default function Footer() {
           <Grid item xs={2} sm={4} md={3}>
             <Typography
               sx={{ m: 2, color: "var(--primary-color)", fontWeight: "bold" }}
-              variant="h6"
               component="div"
             >
               Connect with us
@@ -99,19 +96,19 @@ export default function Footer() {
               }}
             >
               <Typography
-                variant="h6"
+                variant="p"
                 style={{ fontSize: "15px", display: "block" }}
               >
                 Facebook
               </Typography>{" "}
               <Typography
-                variant="h6"
+                variant="p"
                 style={{ fontSize: "15px", display: "block" }}
               >
                 Linkdin
               </Typography>
               <Typography
-                variant="h6"
+                variant="p"
                 style={{ fontSize: "15px", display: "block" }}
               >
                 Twitter
