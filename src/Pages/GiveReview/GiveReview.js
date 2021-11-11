@@ -47,25 +47,6 @@ export default function GiveReview() {
           <Box
             style={{ textAlign: "center" }}
             sx={{
-              "& > legend": { mt: 2, ml: 4 },
-            }}
-          >
-            <Typography component="legend">
-              Give you valuable rating please
-            </Typography>
-            <StyledRating
-              style={{ margin: "10px 0px 0px 30px" }}
-              name="customized-color"
-              defaultValue={0}
-              getLabelText={value => `${value} Heart${value !== 1 ? "s" : ""}`}
-              precision={0.5}
-              icon={<FavoriteIcon fontSize="inherit" />}
-              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            />
-          </Box>
-          <Box
-            style={{ textAlign: "center" }}
-            sx={{
               alignItems: "center",
               "& > :not(style)": { m: 1 },
             }}
@@ -80,6 +61,25 @@ export default function GiveReview() {
                 borderRadius: "5px",
               }}
               placeholder="Give feedback"
+            />
+          </Box>
+          <Box
+            style={{ textAlign: "center" }}
+            sx={{
+              "& > legend": { mt: 2 },
+            }}
+          >
+            <Typography component="legend">
+              Give you valuable rating please
+            </Typography>
+            <StyledRating
+              style={{ marginTop: "10px" }}
+              name="customized-color"
+              defaultValue={0}
+              getLabelText={value => `${value} Heart${value !== 1 ? "s" : ""}`}
+              precision={0.5}
+              icon={<FavoriteIcon fontSize="inherit" />}
+              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
             />
           </Box>
           <Button
