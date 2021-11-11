@@ -4,6 +4,7 @@ import AuthProvider from "./Context/AuthProvider/AuthProvider";
 import Explore from "./Pages/Explore/Explore";
 import Home from "./Pages/Home/Home/Home";
 import Login from "./Pages/Login/Login";
+import Myorders from "./Pages/Myorders/Myorders";
 import NotFound from "./Pages/NotFound/NotFound";
 import Payment from "./Pages/Payment/Payment";
 import Purchase from "./Pages/Purchase/Purchase";
@@ -32,6 +33,9 @@ function App() {
             </Route>
             <Route path="/payment">
               <Payment />
+            </Route>
+            <Route path="/myorders">
+              <Myorders />
             </Route>
             <Route path="/registration">
               <Registration />
