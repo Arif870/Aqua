@@ -4,17 +4,19 @@ import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
-import { Button, Container } from "@mui/material";
+import { Button, Container, Divider } from "@mui/material";
 import "./Navigation.css";
 import useAuth from "../../../Hooks/useAuth";
+import PaymentIcon from "@mui/icons-material/Payment";
+import StoreIcon from "@mui/icons-material/Store";
+import ReviewsIcon from "@mui/icons-material/Reviews";
 
 export default function Navigation() {
   const { user, logoutUser } = useAuth();
@@ -95,29 +97,48 @@ export default function Navigation() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
+          <Avatar /> Arif-uz-zaman
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
-            <PersonAdd fontSize="small" />
+            <DashboardIcon fontSize="small" />
           </ListItemIcon>
-          Add another account
+          <Link to="/dashboard" style={{ textDecoration: "none" }}>
+            Dashboard
+          </Link>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <PaymentIcon fontSize="small" />
           </ListItemIcon>
-          Settings
+          <Link to="/payment" style={{ textDecoration: "none" }}>
+            Payment
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <StoreIcon fontSize="small" />
+          </ListItemIcon>
+          <Link to="/myorders" style={{ textDecoration: "none" }}>
+            My orders
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <ReviewsIcon fontSize="small" />
+          </ListItemIcon>
+          <Link to="/review" style={{ textDecoration: "none" }}>
+            Review
+          </Link>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          <Link to="/logout" style={{ textDecoration: "none" }}>
+            Logout
+          </Link>
         </MenuItem>
       </Menu>
     </React.Fragment>
