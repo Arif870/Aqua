@@ -3,13 +3,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
+import betaimg from "../../images/batta.png";
 
 export default function Registration() {
   return (
     <div>
       <Navigation />
       <Grid>
-        <Grid item xs={12}></Grid>
+        <Grid item xs={12}>
+          <img
+            style={{
+              width: "200px",
+              margin: " 20px auto 0px",
+              display: "block",
+            }}
+            src={betaimg}
+            alt="betta"
+          />
+        </Grid>
         <Grid item xs={12} style={{ margin: "auto", display: "block" }}>
           {" "}
           <Typography
@@ -18,7 +29,7 @@ export default function Registration() {
               textAlign: "center",
               color: "var(--primary-color)",
               fontWeight: "bold",
-              margin: "30px 0px",
+              margin: "20px 0px",
             }}
           >
             Registration Form

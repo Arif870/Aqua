@@ -92,19 +92,28 @@ export default function Footer() {
             <Typography
               style={{
                 color: "var(--primary-color)",
-                display: "flex",
+
                 gap: "15px",
                 fontSize: "26px",
                 margin: "20px 0px 0px 10px",
               }}
             >
-              <Typography variant="p" style={{ fontSize: "15px" }}>
+              <Typography
+                variant="h6"
+                style={{ fontSize: "15px", display: "block" }}
+              >
                 Facebook
-              </Typography>
-              <Typography variant="p" style={{ fontSize: "15px" }}>
+              </Typography>{" "}
+              <Typography
+                variant="h6"
+                style={{ fontSize: "15px", display: "block" }}
+              >
                 Linkdin
               </Typography>
-              <Typography variant="p" style={{ fontSize: "15px" }}>
+              <Typography
+                variant="h6"
+                style={{ fontSize: "15px", display: "block" }}
+              >
                 Twitter
               </Typography>
             </Typography>

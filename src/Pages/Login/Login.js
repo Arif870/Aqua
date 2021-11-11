@@ -4,6 +4,7 @@ import googleimg from "../../images/google_logo.png";
 import "./Login.css";
 import Navigation from "../Shared/Navigation/Navigation";
 import Footer from "../Shared/Footer/Footer";
+import betaimg from "../../images/batta.png";
 
 export default function Login() {
   return (
@@ -14,11 +15,21 @@ export default function Login() {
         style={{
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
-          padding: "40px 0px",
+          padding: "20px 0px",
         }}
       >
         <Grid>
-          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+            <img
+              style={{
+                width: "200px",
+                margin: " 20px auto 0px",
+                display: "block",
+              }}
+              src={betaimg}
+              alt="betta"
+            />
+          </Grid>
           <Grid item xs={12} style={{ margin: "auto", display: "block" }}>
             {" "}
             <Typography
