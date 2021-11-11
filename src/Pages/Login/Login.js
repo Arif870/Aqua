@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import googleimg from "../../images/google_logo.png";
 import "./Login.css";
 import Navigation from "../Shared/Navigation/Navigation";
+import Footer from "../Shared/Footer/Footer";
 
 export default function Login() {
   return (
@@ -110,6 +111,7 @@ export default function Login() {
           </Grid>
         </Grid>
       </div>
+      <Footer />
     </>
   );
 }

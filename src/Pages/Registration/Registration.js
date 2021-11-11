@@ -1,6 +1,7 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
 
 export default function Registration() {
@@ -92,6 +93,7 @@ export default function Registration() {
           </form>
         </Grid>
       </Grid>
+      <Footer />
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import { Container, Grid } from "@mui/material";
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div>
+    <div style={{ backgroundColor: "var(--third-color)", marginTop: "80px" }}>
       <Container>
         <Grid
           sx={{ color: "white", p: 4 }}
@@ -18,16 +17,16 @@ export default function Footer() {
               Emergincey care
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Checkup
+              Home service
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Personal database
+              Aquarum fish
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Tooth extraction
+              Free 2
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Checkup
+              free food
             </Typography>
           </Grid>
           <Grid item xs={2} sm={4} md={3}>
@@ -36,22 +35,22 @@ export default function Footer() {
               variant="h6"
               component="div"
             >
-              Services
+              Food Quality
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Personal care
+              High protine food
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Day night shift
+              breeder
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Cardiology center
+              Dry food
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Tooth extraction
+              Mix food
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Ambulance service
+              Variation
             </Typography>
           </Grid>
 
@@ -61,22 +60,22 @@ export default function Footer() {
               variant="h6"
               component="div"
             >
-              Kindeny special care
+              Fish Quality
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Kidney dialayses
+              Fresh water
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Kidney transplant
+              water cleaner
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Blood cleaning
+              breeder
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              kideny extraction
+              5 colors
             </Typography>
             <Typography sx={{ m: 2 }} variant="p" component="div">
-              Exercise
+              Long size
             </Typography>
           </Grid>
           <Grid item xs={2} sm={4} md={3}>
@@ -99,16 +98,22 @@ export default function Footer() {
                 margin: "20px 0px 0px 10px",
               }}
             >
-              <i className="fab fa-facebook-square"></i>
-              <i className="fab fa-linkedin"></i>
-              <i className="fab fa-twitter-square"></i>
+              <Typography variant="p" style={{ fontSize: "15px" }}>
+                Facebook
+              </Typography>
+              <Typography variant="p" style={{ fontSize: "15px" }}>
+                Linkdin
+              </Typography>
+              <Typography variant="p" style={{ fontSize: "15px" }}>
+                Twitter
+              </Typography>
             </Typography>
           </Grid>
         </Grid>
         <Typography
           style={{ color: "white", textAlign: "center", paddingBottom: "30px" }}
         >
-          Copyright &copy; 2021. All rights reserved Doctor portal
+          Copyright &copy; 2021. All rights reserved Aqua
         </Typography>
       </Container>
     </div>

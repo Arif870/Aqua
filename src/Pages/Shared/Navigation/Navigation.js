@@ -26,16 +26,13 @@ export default function Navigation() {
   };
   return (
     <React.Fragment>
-      <div
-        style={{ borderBottom: "1px solid lightgray", paddingBottom: "10px" }}
-      >
+      <div style={{ borderBottom: "1px solid lightgray" }}>
         <Container>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               textAlign: "center",
-              marginTop: "15px",
             }}
           >
             <Link to="/">
