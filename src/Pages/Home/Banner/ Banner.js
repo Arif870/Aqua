@@ -41,7 +41,7 @@ export default function Banner() {
               style={{
                 marginTop: "20px",
                 display: "block",
-                fontWeight: "300",
+                fontWeight: "400",
                 width: "90%",
               }}
             >
