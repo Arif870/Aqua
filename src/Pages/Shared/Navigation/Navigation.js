@@ -41,8 +41,8 @@ export default function Navigation() {
             <Link to="/">
               <Typography sx={{ minWidth: 100 }}>Home</Typography>
             </Link>
-            <Link to="/registration">
-              <Typography sx={{ minWidth: 100 }}>Registration</Typography>
+            <Link to="/explore">
+              <Typography sx={{ minWidth: 100 }}>explore</Typography>
             </Link>
             {user?.email ? (
               <Button onClick={logoutUser}>LogOut</Button>
@@ -57,10 +57,6 @@ export default function Navigation() {
                 <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
               </IconButton>
             </Tooltip>
-
-            <Link to="/explore">
-              <Typography sx={{ minWidth: 100 }}>Explore</Typography>
-            </Link>
           </Box>
         </Container>
       </div>
