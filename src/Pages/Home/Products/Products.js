@@ -19,6 +19,7 @@ import img5 from "../../../images/products/5.png";
 import img6 from "../../../images/products/6.png";
 import "./Products.css";
 import { Box } from "@mui/system";
+import { Link } from "react-router-dom";
 
 export default function Products() {
   const products = [
@@ -128,9 +129,11 @@ export default function Products() {
                       <FavoriteIcon />
                     </IconButton>
                   </Box>
-                  <Button style={{ color: "var(--secondary-color)" }}>
-                    Purchase
-                  </Button>
+                  <Link to="/purchase" style={{ textDecoration: "none" }}>
+                    <Button style={{ color: "var(--secondary-color)" }}>
+                      Purchase
+                    </Button>
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>

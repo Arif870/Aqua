@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import AuthProvider from "./Context/AuthProvider/AuthProvider";
+import Explore from "./Pages/Explore/Explore";
 import Home from "./Pages/Home/Home/Home";
 import Login from "./Pages/Login/Login";
+import Purchase from "./Pages/Purchase/Purchase";
 import Registration from "./Pages/Registration/Registration";
 
 function App() {
@@ -17,9 +19,14 @@ function App() {
             <Route path="/home">
               <Home />
             </Route>
-
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/explore">
+              <Explore />
+            </Route>
+            <Route path="/purchase">
+              <Purchase />
             </Route>
             <Route path="/registration">
               <Registration />
