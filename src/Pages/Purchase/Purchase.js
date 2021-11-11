@@ -9,6 +9,23 @@ export default function Purchase() {
   return (
     <div>
       <Navigation />
+      <Typography
+        variant="h4"
+        style={{ textAlign: "center", margin: "80px 0px 20px" }}
+      >
+        Complete your order please
+      </Typography>
+      <div
+        style={{
+          width: "150px",
+          height: "4px",
+          backgroundColor: "var(--primary-color)",
+          margin: " 0px auto 80px",
+          display: "block",
+          borderRadius: "10px",
+        }}
+        className="underheading"
+      ></div>
       <Container>
         <Grid
           container
