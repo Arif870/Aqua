@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import firebaseInitialize from "../Firebase/Firebase.init";
 import {
   getAuth,
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import Swal from "sweetalert2";
@@ -18,10 +21,11 @@ const useFirebase = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const auth = getAuth();
-
+  const googleProvider = new GoogleAuthProvider();
+  /////////==========================///////////////
   //==================== Observe
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, user => {
       if (user) {
         setUser(user);
       } else {
@@ -30,32 +34,74 @@ const useFirebase = () => {
       setIsLoading(false);
     });
   }, []);
+  //==================== Google Sign IN
+  //
+  // Google login
 
-  //==================== Registration
-  const registerUser = (email, password, history) => {
+  const handleGoogleSignIn = (location, history) => {
     setIsLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        console.log(user);
+    signInWithPopup(auth, googleProvider)
+      .then(result => {
+        setUser(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Login successfull",
+          showConfirmButton: false,
+          timer: 2000,
+        });
 
-        //----------
-        Swal.fire("Good job!", "Registration done successfully", "success");
-        //----------
-        history.push("/");
+        const destination = location?.state?.from || "/";
+        history.replace(destination);
+        setError("");
       })
-      .catch((error) => {
+      .catch(error => {
         setError(error.message);
-        // ..
       })
       .finally(() => setIsLoading(false));
   };
+  //==================== Registration
+  // Register user
+
+  const registerUser = (email, password, name, location, history) => {
+    setIsLoading(true);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        const newUser = { email, displayName: name };
+        setUser(newUser);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Registration successfull",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+
+        // date send to firebase
+
+        updateProfile(auth.currentUser, {
+          displayName: name,
+        })
+          .then(() => {})
+          .catch(error => {
+            setError(error.message);
+          });
+
+        const destination = "/home";
+        history.replace(destination);
+      })
+      .catch(error => {
+        const errorMessage = (error.message = "User already registered");
+        setError(errorMessage);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
   //==================== LogIn
   const loginUser = (email, password, history, location) => {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(userCredential => {
         const user = userCredential.user;
         setUser(user);
         //----------
@@ -64,7 +110,7 @@ const useFirebase = () => {
         history.push(destination);
         //----------
       })
-      .catch((error) => {
+      .catch(error => {
         setError(error.message);
       })
       .finally(() => setIsLoading(false));
@@ -77,24 +123,21 @@ const useFirebase = () => {
         //----------
         Swal.fire("log Out!", "See you again", "success");
       })
-      .catch((error) => {
+      .catch(error => {
         setError(error.message);
       })
       .finally(() => setIsLoading(false));
   };
 
-  //
-  //
-  //
-  //
-  //
-  //
+  /////////==========================///////////////
   //==================== RETURN
   return {
     user,
+    error,
     isLoading,
     registerUser,
     loginUser,
+    handleGoogleSignIn,
     logoutUser,
   };
 };

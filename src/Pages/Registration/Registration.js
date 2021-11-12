@@ -7,34 +7,71 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
 import betaimg from "../../images/batta.png";
 import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 export default function Registration() {
-  const { registerUser, isLoading } = useAuth();
+  const [logInData, setLoginData] = useState({});
+  const { registerUser, error } = useAuth();
 
-  const [loginData, setLoginData] = useState({});
+  // redirect to login page
+  const location = useLocation();
   const history = useHistory();
 
+  const handleRegistrationSubmit = e => {
+    const nameLength = document.getElementById("reg_name").value.length;
+    const emailLength = document.getElementById("reg_email").value.length;
+    const passLength = document.getElementById("reg_pass").value.length;
+    const pass2Length = document.getElementById("reg_pass2").value.length;
+
+    if (
+      emailLength === 0 ||
+      passLength === 0 ||
+      pass2Length === 0 ||
+      nameLength === 0
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Field must not be empty",
+      });
+    } else if (logInData.password !== logInData.repeat_password) {
+      Swal.fire({
+        icon: "error",
+        title: "Password did not matched",
+      });
+    } else if (passLength < 6) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "password must be 6 digit long",
+      });
+    } else if (error) {
+      Swal.fire({
+        icon: "error",
+        title: error,
+      });
+    } else {
+      registerUser(
+        logInData.email,
+        logInData.password,
+        logInData.name,
+        location,
+        history
+      );
+    }
+    e.preventDefault();
+  };
   const handleOnChange = e => {
-    const field = e.target.name;
     const value = e.target.value;
-    const newLoginData = { ...loginData };
+    const field = e.target.name;
+
+    const newLoginData = { ...logInData };
     newLoginData[field] = value;
     setLoginData(newLoginData);
-    console.log(newLoginData);
-  };
-
-  const handleRegistrationSubmit = e => {
-    if (loginData.password !== loginData.repeat_password) {
-      alert("password didnot matched!");
-      return;
-    }
-    registerUser(loginData.email, loginData.password, history);
-    e.preventDefault();
   };
 
   return (
@@ -65,85 +102,83 @@ export default function Registration() {
           >
             Registration Form
           </Typography>
-          {!isLoading && (
-            <form
-              onSubmit={handleRegistrationSubmit}
-              className="loginformsizecontrol"
-              style={{ width: "500px" }}
+          <form
+            onSubmit={handleRegistrationSubmit}
+            className="loginformsizecontrol"
+            style={{ width: "500px" }}
+          >
+            <TextField
+              style={{ width: "100%", marginBottom: "20px" }}
+              id="reg_name"
+              label="Name"
+              type="text"
+              name="name"
+              variant="filled"
+              onChange={handleOnChange}
+            />
+            <TextField
+              style={{ width: "100%", marginBottom: "20px" }}
+              id="reg_email"
+              label="Email"
+              type="email"
+              name="email"
+              variant="filled"
+              onChange={handleOnChange}
+            />
+            <TextField
+              style={{ width: "100%", marginBottom: "20px" }}
+              id="reg_pass"
+              label="Password"
+              type="password"
+              name="password"
+              variant="filled"
+              onChange={handleOnChange}
+            />
+            <TextField
+              style={{ width: "100%" }}
+              id="reg_pass2"
+              label="Repeat password"
+              type="password"
+              name="repeat_password"
+              variant="filled"
+              onChange={handleOnChange}
+            />
+            <Typography
+              variant="p"
+              style={{
+                marginTop: "10px",
+                display: "block",
+                color: "var(--body-text-color)",
+              }}
             >
-              <TextField
-                style={{ width: "100%", marginBottom: "20px" }}
-                id="reg_name"
-                label="Name"
-                type="text"
-                name="name"
-                variant="filled"
-                onChange={handleOnChange}
-              />
-              <TextField
-                style={{ width: "100%", marginBottom: "20px" }}
-                id="reg_email"
-                label="Email"
-                type="email"
-                name="email"
-                variant="filled"
-                onChange={handleOnChange}
-              />
-              <TextField
-                style={{ width: "100%", marginBottom: "20px" }}
-                id="reg_pass"
-                label="Password"
-                type="password"
-                name="password"
-                variant="filled"
-                onChange={handleOnChange}
-              />
-              <TextField
-                style={{ width: "100%" }}
-                id="reg_pass2"
-                label="Repeat password"
-                type="password"
-                name="repeat_password"
-                variant="filled"
-                onChange={handleOnChange}
-              />
-              <Typography
-                variant="p"
-                style={{
-                  marginTop: "10px",
-                  display: "block",
-                  color: "var(--body-text-color)",
-                }}
-              >
-                Already have an account ?{" "}
-                {
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      color: "var(--primary-color)",
-                    }}
-                    to="/login"
-                  >
-                    Login
-                  </Link>
-                }
-              </Typography>
-              <Button
-                variant="contained"
-                type="submit"
-                style={{
-                  backgroundColor: "var(--secondary-color)",
-                  fontWeight: "bold",
-                  display: "block",
-                  margin: "40px auto 0px",
-                  width: "150px",
-                }}
-              >
-                Registration
-              </Button>
-            </form>
-          )}
-          {isLoading && <CircularProgress />}
+              Already have an account ?{" "}
+              {
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    color: "var(--primary-color)",
+                  }}
+                  to="/login"
+                >
+                  Login
+                </Link>
+              }
+            </Typography>
+            <Button
+              variant="contained"
+              type="submit"
+              style={{
+                backgroundColor: "var(--secondary-color)",
+                fontWeight: "bold",
+                display: "block",
+                margin: "40px auto 0px",
+                width: "150px",
+              }}
+            >
+              Registration
+            </Button>
+          </form>
+          )
         </Grid>
       </Grid>
       <Footer />

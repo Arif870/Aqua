@@ -1,5 +1,5 @@
 import { Button, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img1 from "../../../images/products/1.png";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,6 +8,14 @@ import Select from "@mui/material/Select";
 
 export default function ManageAllProoducts() {
   const [age, setAge] = React.useState("");
+  const [allorders, setAllorders] = useState([]);
+
+  useEffect(() => {
+    const uri = "http://localhost:5000/allorders";
+    fetch(uri)
+      .then(res => res.json())
+      .then(data => setAllorders(data));
+  }, []);
 
   const handleChange = event => {
     setAge(event.target.value);
@@ -15,44 +23,51 @@ export default function ManageAllProoducts() {
   return (
     <div>
       <Grid container style={{ marginTop: "80px", justifyContent: "center" }}>
-        <Grid
-          item
-          xs={12}
-          sm={8}
-          style={{
-            border: "1px solid lightgray",
-            padding: "20px",
-            borderRadius: "10px",
-          }}
-        >
-          <img
-            style={{ width: "150px", display: "block", margin: "auto" }}
-            src={img1}
-            alt=""
-          />
-
-          <div style={{ marginLeft: "20px" }}>
-            <Typography variant="h5">Betta fish</Typography>
-            <Typography variant="p">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Laboriosam maiores quam eligendi quidem quos rerum ea. Cumque
-              commodi odio tenetur.
-            </Typography>
+        {allorders.map(orders => (
+          <Grid
+            key={orders._id}
+            item
+            xs={12}
+            sm={8}
+            style={{
+              border: "1px solid lightgray",
+              padding: "20px",
+              borderRadius: "10px",
+              marginTop: "20px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <img
+                style={{
+                  width: "200px",
+                  borderRadius: "4px",
+                }}
+                src={orders.productImage}
+                alt=""
+              />
+              <div style={{ marginLeft: "15px" }}>
+                <Typography variant="h5">{orders.productName}</Typography>
+                <Typography variant="h5">${orders.productPrice}</Typography>
+                <Typography variant="p">{orders.productDesc}</Typography>
+              </div>
+            </div>
             <Typography
               variant="h5"
-              style={{ margin: "20px 0px 10px" }}
+              style={{ margin: "30px 0px 10px" }}
               color="var(--primary-color)"
             >
               Customer info
             </Typography>
-            <Typography variant="p">Name : Arif-uz-zaman</Typography> <br />
-            <Typography variant="p">Email : arif@gmail.com</Typography>
+            <Typography variant="p">Name : {orders.userName}</Typography> <br />
+            <Typography variant="p">Email : {orders.email}</Typography>
             <br />
-            <Typography variant="p">Date : 19/10/2021</Typography> <br />
-            <Typography variant="p">
-              address : Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Qui, omnis.
-            </Typography>
+            <Typography variant="p">Date : {orders.date}</Typography> <br />
+            <Typography variant="p">address : {orders.fulladdress}</Typography>
             <div
               style={{
                 display: "flex",
@@ -62,34 +77,34 @@ export default function ManageAllProoducts() {
               }}
             >
               <Button
+                size="small"
                 style={{
                   backgroundColor: "var(--primary-color)",
                   color: "white",
                   marginRight: "10px",
                 }}
               >
-                Delete order
+                Delete
               </Button>
-
-              <FormControl sx={{ m: 1, minWidth: 150 }}>
-                <InputLabel id="demo-simple-select-autowidth-label">
-                  Order history
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-autowidth-label"
-                  id="demo-simple-select-autowidth"
-                  value={age}
-                  onChange={handleChange}
-                  autoWidth
-                  label="Order history"
-                >
-                  <MenuItem value="accept">Accept</MenuItem>
-                  <MenuItem value="hold">On hold</MenuItem>
-                </Select>
-              </FormControl>
+              <Button
+                size="small"
+                style={{
+                  backgroundColor: "var(--secondary-color)",
+                  color: "white",
+                  marginRight: "10px",
+                }}
+              >
+                Accept
+              </Button>
+              <Typography
+                variant="p"
+                style={{ color: "var(--secondary-color)", marginRight: "15px" }}
+              >
+                {orders.status}...
+              </Typography>
             </div>
-          </div>
-        </Grid>
+          </Grid>
+        ))}
       </Grid>
     </div>
   );

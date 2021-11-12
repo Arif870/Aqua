@@ -9,6 +9,7 @@ import Login from "./Pages/Login/Login";
 import Myorders from "./Pages/Myorders/Myorders";
 import NotFound from "./Pages/NotFound/NotFound";
 import Payment from "./Pages/Payment/Payment";
+import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute";
 import Purchase from "./Pages/Purchase/Purchase";
 import Registration from "./Pages/Registration/Registration";
 
@@ -27,12 +28,12 @@ function App() {
             <Route path="/login">
               <Login />
             </Route>
-            <Route path="/explore">
+            <PrivateRoute path="/explore">
               <Explore />
-            </Route>
-            <Route path="/purchase">
+            </PrivateRoute>
+            <PrivateRoute path="/purchase/:id">
               <Purchase />
-            </Route>
+            </PrivateRoute>
             <Route path="/payment">
               <Payment />
             </Route>

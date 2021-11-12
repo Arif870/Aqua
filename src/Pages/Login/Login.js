@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router";
-import {
-  Button,
-  Grid,
-  TextField,
-  Typography,
-  CircularProgress,
-} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import googleimg from "../../images/google_logo.png";
 import "./Login.css";
@@ -16,7 +10,7 @@ import betaimg from "../../images/batta.png";
 import useAuth from "../../Hooks/useAuth";
 
 export default function Login() {
-  const { loginUser, isLoading } = useAuth();
+  const { loginUser, handleGoogleSignIn } = useAuth();
   const [loginData, setLoginData] = useState({});
   const history = useHistory();
   const location = useLocation();
@@ -31,8 +25,13 @@ export default function Login() {
 
   const handleLoginSubmit = e => {
     loginUser(loginData.email, loginData.password, history, location);
-    console.log("clicked");
+
     e.preventDefault();
+  };
+
+  ////////=======  Google
+  const signInWithGoogle = e => {
+    handleGoogleSignIn(history, location);
   };
 
   return (
@@ -139,20 +138,17 @@ export default function Login() {
               >
                 Or login by
               </Typography>
-              <Button
-                style={{
-                  margin: "auto",
-                  display: "block",
-                  borderRadius: "20px",
-                }}
-              >
-                <img
-                  style={{ width: "40px" }}
-                  src={googleimg}
-                  alt="googleicon"
-                />
-              </Button>
             </form>
+            <Button
+              onClick={signInWithGoogle}
+              style={{
+                margin: "auto",
+                display: "block",
+                borderRadius: "20px",
+              }}
+            >
+              <img style={{ width: "40px" }} src={googleimg} alt="googleicon" />
+            </Button>
           </Grid>
         </Grid>
       </div>

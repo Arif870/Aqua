@@ -101,7 +101,10 @@ export default function Products() {
                       <FavoriteIcon />
                     </IconButton>
                   </Box>
-                  <Link to="/purchase" style={{ textDecoration: "none" }}>
+                  <Link
+                    to={`/purchase/${product._id}`}
+                    style={{ textDecoration: "none" }}
+                  >
                     <Button style={{ color: "var(--secondary-color)" }}>
                       Purchase
                     </Button>

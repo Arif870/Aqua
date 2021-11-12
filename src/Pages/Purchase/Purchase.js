@@ -1,11 +1,70 @@
 import { Button, Container, Grid, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router";
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
-import img1 from "../../images/products/1.png";
 
 export default function Purchase() {
+  const history = useHistory();
+  const { id } = useParams();
+  const [singleProduct, setSingleProduct] = useState({});
+  const { user } = useAuth();
+  useEffect(() => {
+    const uri = `http://localhost:5000/allproducts/${id}`;
+    fetch(uri)
+      .then(res => res.json())
+      .then(data => setSingleProduct(data));
+  }, []);
+  //----------------------------------------
+  //
+  const initialProductInfo = {
+    userName: user.displayName,
+    email: user.email,
+    status: "pending",
+  };
+  const [productInfo, setProductInfo] = useState(initialProductInfo);
+
+  //
+  const handleOnSubmitProduct = e => {
+    fetch("http://localhost:5000/completePurches", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(completePurchase),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.insertedId) {
+          Swal.fire("Thank you", "Your order is under review", "success");
+        }
+        const destination = "/explore";
+        history.replace(destination);
+      });
+
+    e.preventDefault();
+  };
+
+  const completePurchase = {
+    ...productInfo,
+    productImage: singleProduct.image_url,
+    productName: singleProduct.name,
+    productDesc: singleProduct.desc,
+    productPrice: singleProduct.price,
+  };
+
+  const handleOnBlur = e => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newProduct = { ...productInfo };
+    newProduct[field] = value;
+    setProductInfo(newProduct);
+  };
+
+  //----------------------------------------
   return (
     <div>
       <Navigation />
@@ -37,23 +96,23 @@ export default function Purchase() {
           <Grid item xs={12} sm={6}>
             <img
               style={{ width: "100%", borderRadius: "5px" }}
-              src={img1}
+              src={singleProduct.image_url}
               alt="image1"
             />
-            <Typography variant="h6">Betta fish</Typography>
+            <Typography variant="h6">{singleProduct.name}</Typography>
+            <Typography variant="h5" style={{ color: "red" }}>
+              ${singleProduct.price}
+            </Typography>
             <Typography
               variant="p"
               style={{ marginTop: "10px", display: "block" }}
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Accusantium, sint cupiditate architecto fuga placeat ea
-              consequuntur at minima eligendi quia maxime nesciunt ducimus
-              nostrum et magni? Doloribus architecto modi iusto.
+              {singleProduct.desc}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Box>
-              <form>
+              <form onSubmit={handleOnSubmitProduct}>
                 <Box
                   sx={{
                     display: "flex",
@@ -62,9 +121,12 @@ export default function Purchase() {
                   }}
                 >
                   <TextField
-                    name="patientName"
+                    onBlur={handleOnBlur}
+                    name="userName"
+                    disabled
                     style={{ width: "100%" }}
                     label="Name"
+                    defaultValue={user.displayName}
                   />
                 </Box>
                 <Box
@@ -75,10 +137,10 @@ export default function Purchase() {
                   }}
                 >
                   <TextField
+                    onBlur={handleOnBlur}
                     name="phone"
                     style={{ width: "100%" }}
                     label="Phone Number"
-                    defaultValue=""
                   />
                 </Box>
                 <Box
@@ -89,9 +151,12 @@ export default function Purchase() {
                   }}
                 >
                   <TextField
+                    onBlur={handleOnBlur}
                     name="email"
                     style={{ width: "100%" }}
                     label="Email"
+                    disabled
+                    defaultValue={user.email}
                   />
                 </Box>
                 <Box
@@ -102,9 +167,10 @@ export default function Purchase() {
                   }}
                 >
                   <TextField
+                    onBlur={handleOnBlur}
                     name="date"
                     style={{ width: "100%" }}
-                    label="Date"
+                    type="date"
                   />
                 </Box>
                 <Box
@@ -115,12 +181,15 @@ export default function Purchase() {
                   }}
                 >
                   <TextField
+                    onBlur={handleOnBlur}
                     style={{ width: "100%", color: "lightgray" }}
                     placeholder="Full Address"
+                    name="fulladdress"
                   />
                 </Box>
 
                 <Button
+                  type="submit"
                   variant="contained"
                   style={{
                     backgroundColor: "var(--secondary-color)",
@@ -129,7 +198,7 @@ export default function Purchase() {
                     margin: "12px",
                   }}
                 >
-                  Complete purchase{" "}
+                  Complete purchase
                 </Button>
               </form>
             </Box>
