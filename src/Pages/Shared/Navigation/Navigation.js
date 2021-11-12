@@ -142,7 +142,11 @@ export default function Navigation() {
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
-            <Link to="/logout" style={{ textDecoration: "none" }}>
+            <Link
+              to="/login"
+              onClick={logoutUser}
+              style={{ textDecoration: "none" }}
+            >
               Logout
             </Link>
           </MenuItem>

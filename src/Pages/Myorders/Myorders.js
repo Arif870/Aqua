@@ -1,10 +1,19 @@
 import { Button, Container, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
 import img1 from "../../images/products/1.png";
+import useAuth from "../../Hooks/useAuth";
 
 export default function Myorders() {
+  const [myproduct, setMyproduct] = useState([]);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/allorders?email=${user.email}`)
+      .then(res => res.json())
+      .then(data => setMyproduct(data));
+  }, []);
   return (
     <div>
       <Navigation />
@@ -27,55 +36,61 @@ export default function Myorders() {
           className="underheading"
         ></div>
         <Grid container style={{ marginTop: "80px", justifyContent: "center" }}>
-          <Grid
-            item
-            xs={12}
-            sm={8}
-            style={{
-              display: "flex",
-
-              border: "1px solid lightgray",
-              padding: "20px",
-              borderRadius: "10px",
-            }}
-          >
-            <img style={{ width: "200px" }} src={img1} alt="" />
-            <div style={{ marginLeft: "20px" }}>
-              <Typography variant="h5">Betta fish</Typography>
-              <Typography variant="h5" color="var(--primary-color)">
-                $5
-              </Typography>
-              <Typography variant="p">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Laboriosam maiores quam eligendi quidem quos rerum ea. Cumque
-                commodi odio tenetur.
-              </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "right",
-                  alignItems: "center",
-                  marginTop: "20px",
-                }}
-              >
-                <Button
+          {myproduct.map(product => (
+            <Grid
+              item
+              xs={12}
+              sm={8}
+              style={{
+                display: "flex",
+                marginTop: "20px",
+                border: "1px solid lightgray",
+                padding: "20px",
+                borderRadius: "10px",
+              }}
+            >
+              <img
+                style={{ width: "200px" }}
+                src={product.productImage}
+                alt=""
+              />
+              <div style={{ marginLeft: "20px" }}>
+                <Typography variant="h5">{product.productName}</Typography>
+                <Typography variant="h5" color="var(--primary-color)">
+                  ${product.productPrice}
+                </Typography>
+                <Typography variant="p">{product.productDesc}</Typography>
+                <div
                   style={{
-                    backgroundColor: "var(--primary-color)",
-                    color: "white",
-                    marginRight: "10px",
+                    display: "flex",
+                    justifyContent: "right",
+                    alignItems: "center",
+                    marginTop: "20px",
                   }}
                 >
-                  Delete order
-                </Button>
-                <Typography
-                  variant="p"
-                  style={{ display: "block", color: "var(--secondary-color)" }}
-                >
-                  Order processing..
-                </Typography>
+                  <Button
+                    size="small"
+                    style={{
+                      backgroundColor: "var(--primary-color)",
+                      color: "white",
+                      marginRight: "10px",
+                    }}
+                  >
+                    Delete order
+                  </Button>
+                  <Typography
+                    variant="p"
+                    style={{
+                      display: "block",
+                      color: "var(--secondary-color)",
+                    }}
+                  >
+                    Order processing..
+                  </Typography>
+                </div>
               </div>
-            </div>
-          </Grid>
+            </Grid>
+          ))}
         </Grid>
       </Container>
       <Footer />
