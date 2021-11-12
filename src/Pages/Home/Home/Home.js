@@ -12,8 +12,8 @@ export default function Home() {
       <Navigation />
       <Banner />
       <Products />
-      <Review />
       <Video />
+      <Review />
       <Footer />
     </div>
   );
