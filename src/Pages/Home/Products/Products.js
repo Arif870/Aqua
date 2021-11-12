@@ -1,65 +1,33 @@
 import {
   Button,
   CardActions,
+  CircularProgress,
   Container,
   Grid,
   IconButton,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import img1 from "../../../images/products/1.png";
-import img2 from "../../../images/products/2.png";
-import img3 from "../../../images/products/3.png";
-import img4 from "../../../images/products/4.png";
-import img5 from "../../../images/products/5.png";
-import img6 from "../../../images/products/6.png";
 import "./Products.css";
 import { Box } from "@mui/system";
 import { Link } from "react-router-dom";
 
 export default function Products() {
-  const products = [
-    {
-      img: img1,
-      name: "Red fighter",
-      desc: "Red fighter Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      price: "$5",
-    },
-    {
-      img: img2,
-      name: "Golden betta",
-      desc: "Golden betta Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      price: "$4",
-    },
-    {
-      img: img3,
-      name: "Small fighter",
-      desc: "Small fighter Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      price: "$7",
-    },
-    {
-      img: img4,
-      name: "Lizard fine",
-      desc: "Lizard fine are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      price: "$4",
-    },
-    {
-      img: img5,
-      name: "Lizard",
-      desc: " Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      price: "$3",
-    },
-    {
-      img: img6,
-      name: "Bluish betta",
-      desc: "Bluish betta are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents except Antarctica",
-      price: "$5",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [isData, setIsdata] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/allproducts")
+      .then(res => res.json())
+      .then(data => {
+        setProducts(data);
+        setIsdata(true);
+      });
+  }, []);
 
   return (
     <div>
@@ -70,6 +38,7 @@ export default function Products() {
         >
           Our most popular Products
         </Typography>
+
         <div
           style={{
             width: "150px",
@@ -92,7 +61,10 @@ export default function Products() {
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
         >
-          {products.map((product, index) => (
+          {!isData && (
+            <CircularProgress style={{ display: "block", margin: "auto" }} />
+          )}
+          {products.slice(0, 6).map((product, index) => (
             <Grid item xs={4} sm={4} md={4} key={index}>
               <Card
                 sx={{ Width: "100%" }}
@@ -102,7 +74,7 @@ export default function Products() {
                   component="img"
                   alt="green iguana"
                   height="200"
-                  image={product.img}
+                  image={product.image_url}
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -115,7 +87,7 @@ export default function Products() {
                       color: "var(--primary-color)",
                     }}
                   >
-                    {product.price}
+                    ${product.price}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     {product.desc.slice(0, 120)}
