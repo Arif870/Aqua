@@ -2,7 +2,6 @@ import { Button, Container, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Footer from "../Shared/Footer/Footer";
 import Navigation from "../Shared/Navigation/Navigation";
-import img1 from "../../images/products/1.png";
 import useAuth from "../../Hooks/useAuth";
 
 export default function Myorders() {
@@ -10,10 +9,19 @@ export default function Myorders() {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/allorders?email=${user.email}`)
+    const uri = `http://localhost:5000/myorders?email=${user.email}`;
+    fetch(uri)
       .then(res => res.json())
       .then(data => setMyproduct(data));
   }, []);
+
+  /////===================
+  const deleteHandaler = e => {
+    myproduct.map(product => {
+      return console.log(product._id);
+    });
+  };
+
   return (
     <div>
       <Navigation />
@@ -38,6 +46,7 @@ export default function Myorders() {
         <Grid container style={{ marginTop: "80px", justifyContent: "center" }}>
           {myproduct.map(product => (
             <Grid
+              key={product._id}
               item
               xs={12}
               sm={8}
@@ -70,6 +79,7 @@ export default function Myorders() {
                 >
                   <Button
                     size="small"
+                    onClick={deleteHandaler}
                     style={{
                       backgroundColor: "var(--primary-color)",
                       color: "white",

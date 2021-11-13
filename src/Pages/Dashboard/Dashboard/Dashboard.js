@@ -26,6 +26,7 @@ import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import Manageproducts from "../Manageproducts/Manageproducts";
 import Makeadmin from "../Makeadmin/Makeadmin";
 import Addaproduct from "../Addaproduct/Addaproduct";
+import useAuth from "../../../Hooks/useAuth";
 const drawerWidth = 240;
 
 const openedMixin = theme => ({
@@ -97,6 +98,7 @@ export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   let { path, url } = useRouteMatch();
+  const { logoutUser } = useAuth();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -185,11 +187,8 @@ export default function Dashboard() {
               <ListItemText>Manage products</ListItemText>
             </ListItem>
           </Link>
-          <Link
-            to={`${url}/logout`}
-            style={{ textDecoration: "none", color: "gray" }}
-          >
-            <ListItem button>
+          <Link to="/" style={{ textDecoration: "none", color: "gray" }}>
+            <ListItem button onClick={logoutUser}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>

@@ -1,8 +1,35 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function Makeadmin() {
+  const [admin, setAdmin] = useState("");
+  const adminhandaler = e => {
+    e.preventDefault();
+
+    const user = { admin };
+    fetch("http://localhost:5000/makeamdin", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+
+        if (data.acknowledged === true) {
+          Swal.fire("Good job!", "Admin added successfull", "success");
+        }
+      });
+  };
+
+  const blurHandaler = e => {
+    setAdmin(e.target.value);
+  };
+
   return (
     <div>
       <Grid>
@@ -29,8 +56,13 @@ export default function Makeadmin() {
               borderRadius: "10px",
             }}
           ></div>
-          <form className="loginformsizecontrol" style={{ width: "500px" }}>
+          <form
+            className="loginformsizecontrol"
+            onSubmit={adminhandaler}
+            style={{ width: "500px" }}
+          >
             <TextField
+              onBlur={blurHandaler}
               style={{ width: "100%", marginBottom: "20px" }}
               id="email"
               label="Email"

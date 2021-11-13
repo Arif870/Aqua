@@ -1,13 +1,7 @@
 import { Button, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import img1 from "../../../images/products/1.png";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
 export default function ManageAllProoducts() {
-  const [age, setAge] = React.useState("");
   const [allorders, setAllorders] = useState([]);
 
   useEffect(() => {
@@ -17,9 +11,6 @@ export default function ManageAllProoducts() {
       .then(data => setAllorders(data));
   }, []);
 
-  const handleChange = event => {
-    setAge(event.target.value);
-  };
   return (
     <div>
       <Grid container style={{ marginTop: "80px", justifyContent: "center" }}>

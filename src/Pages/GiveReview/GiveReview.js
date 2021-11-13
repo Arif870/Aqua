@@ -1,22 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Rating, Typography } from "@mui/material";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import Navigation from "../Shared/Navigation/Navigation";
 import Footer from "../Shared/Footer/Footer";
 import { Box } from "@mui/system";
-import { styled } from "@mui/material/styles";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 export default function GiveReview() {
-  const StyledRating = styled(Rating)({
-    "& .MuiRating-iconFilled": {
-      color: "#ff6d75",
-    },
-    "& .MuiRating-iconHover": {
-      color: "#ff3d47",
-    },
-  });
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState([]);
+  const { user } = useAuth();
+
+  const reviewhandalar = e => {
+    e.preventDefault();
+    const feedback = document.getElementById("reviewfield").value;
+    const userName = user.displayName;
+
+    setReview({ review: feedback, rating: rating, userName: userName });
+
+    fetch("http://localhost:5000/clientreview", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(review),
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: "Thanks for your feedback",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "feedback not sent",
+          });
+        }
+      });
+  };
+
   return (
     <div>
       <Navigation />
@@ -46,10 +71,12 @@ export default function GiveReview() {
             }}
           >
             <TextareaAutosize
+              id="reviewfield"
               minRows={6}
               style={{
                 width: "80%",
-                color: "lightgray",
+                color: "gray",
+                padding: "20px",
                 margin: "auto",
                 border: "1px solid lightgray",
                 borderRadius: "5px",
@@ -66,18 +93,24 @@ export default function GiveReview() {
             <Typography component="legend">
               Give you valuable rating please
             </Typography>
-            <StyledRating
-              style={{ marginTop: "10px" }}
-              name="customized-color"
-              defaultValue={0}
-              getLabelText={value => `${value} Heart${value !== 1 ? "s" : ""}`}
-              precision={0.5}
-              icon={<FavoriteIcon fontSize="inherit" />}
-              emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            />
+            <Box
+              align="left"
+              component="fieldset"
+              mb={3}
+              borderColor="transparent"
+            >
+              <Rating
+                rating={rating}
+                name="rating"
+                onChange={(event, newValue) => {
+                  setRating(newValue);
+                }}
+              />
+            </Box>
           </Box>
           <Button
             variant="contained"
+            onClick={reviewhandalar}
             style={{
               backgroundColor: "var(--secondary-color)",
               fontWeight: "bold",
