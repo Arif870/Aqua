@@ -13,7 +13,7 @@ export default function Purchase() {
   const [singleProduct, setSingleProduct] = useState({});
   const { user } = useAuth();
   useEffect(() => {
-    const uri = `http://localhost:5000/allproducts/${id}`;
+    const uri = `https://thawing-earth-84952.herokuapp.com/allproducts/${id}`;
     fetch(uri)
       .then(res => res.json())
       .then(data => setSingleProduct(data));
@@ -29,7 +29,7 @@ export default function Purchase() {
 
   //
   const handleOnSubmitProduct = e => {
-    fetch("http://localhost:5000/completePurches", {
+    fetch("https://thawing-earth-84952.herokuapp.com/completePurches", {
       method: "POST",
       headers: {
         "content-type": "application/json",

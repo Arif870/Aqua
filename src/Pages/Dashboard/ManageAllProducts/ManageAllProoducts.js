@@ -5,7 +5,7 @@ export default function ManageAllProoducts() {
   const [allorders, setAllorders] = useState([]);
 
   useEffect(() => {
-    const uri = "http://localhost:5000/allorders";
+    const uri = "https://thawing-earth-84952.herokuapp.com/allorders";
     fetch(uri)
       .then(res => res.json())
       .then(data => setAllorders(data));

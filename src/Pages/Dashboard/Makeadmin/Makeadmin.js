@@ -7,7 +7,7 @@ export default function Makeadmin() {
   const [email, setEmail] = useState("");
   const adminhandaler = e => {
     const user = { email };
-    fetch("http://localhost:5000/users/makeamdin", {
+    fetch("https://thawing-earth-84952.herokuapp.com/users/makeamdin", {
       method: "PUT",
       headers: {
         "content-type": "application/json",

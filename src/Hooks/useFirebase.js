@@ -37,7 +37,7 @@ const useFirebase = () => {
   }, []);
   //////////
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${user.email}`)
+    fetch(`https://thawing-earth-84952.herokuapp.com/users/${user.email}`)
       .then(res => res.json())
       .then(data => setAdmin(data.admin));
   }, [user.email]);
@@ -142,7 +142,7 @@ const useFirebase = () => {
   /////////==========================///////////////
   const savetoDB = (email, displayName) => {
     const users = { email, displayName };
-    fetch("http://localhost:5000/users", {
+    fetch("https://thawing-earth-84952.herokuapp.com/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",

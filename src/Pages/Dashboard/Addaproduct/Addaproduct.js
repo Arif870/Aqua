@@ -26,7 +26,7 @@ export default function Addaproduct() {
       });
     } else {
       const products = { ...addproduct };
-      fetch("http://localhost:5000/addnewproduct", {
+      fetch("https://thawing-earth-84952.herokuapp.com/addnewproduct", {
         method: "POST",
         headers: {
           "content-type": "application/json",

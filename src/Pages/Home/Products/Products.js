@@ -21,7 +21,7 @@ export default function Products() {
   const [isData, setIsdata] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allproducts")
+    fetch("https://thawing-earth-84952.herokuapp.com/allproducts")
       .then(res => res.json())
       .then(data => {
         setProducts(data);

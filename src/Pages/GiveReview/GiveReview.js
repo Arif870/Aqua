@@ -19,7 +19,7 @@ export default function GiveReview() {
 
     setReview({ review: feedback, rating: rating, userName: userName });
 
-    fetch("http://localhost:5000/clientreview", {
+    fetch("https://thawing-earth-84952.herokuapp.com/clientreview", {
       method: "POST",
       headers: {
         "content-type": "application/json",

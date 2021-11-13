@@ -9,7 +9,7 @@ export default function Myorders() {
   const { user } = useAuth();
 
   useEffect(() => {
-    const uri = `http://localhost:5000/myorders?email=${user.email}`;
+    const uri = `https://thawing-earth-84952.herokuapp.com/myorders?email=${user.email}`;
     fetch(uri)
       .then(res => res.json())
       .then(data => setMyproduct(data));

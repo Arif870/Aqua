@@ -21,7 +21,7 @@ function Review() {
   const [allreview, setAllreview] = useState([]);
   const maxSteps = allreview.length;
   useEffect(() => {
-    fetch("http://localhost:5000/clientsreview")
+    fetch("https://thawing-earth-84952.herokuapp.com/clientsreview")
       .then(res => res.json())
       .then(data => setAllreview(data));
   }, []);
