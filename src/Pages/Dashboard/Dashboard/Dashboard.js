@@ -27,6 +27,7 @@ import Manageproducts from "../Manageproducts/Manageproducts";
 import Makeadmin from "../Makeadmin/Makeadmin";
 import Addaproduct from "../Addaproduct/Addaproduct";
 import useAuth from "../../../Hooks/useAuth";
+import AdminRoute from "../../AdminRoute/AdminRoute";
 const drawerWidth = 240;
 
 const openedMixin = theme => ({
@@ -208,21 +209,21 @@ export default function Dashboard() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Switch>
-          <Route exact path={path}>
+          <AdminRoute exact path={path}>
             <ManageAllProoducts />
-          </Route>
-          <Route path={`${path}/manageallorders`}>
+          </AdminRoute>
+          <AdminRoute path={`${path}/manageallorders`}>
             <ManageAllProoducts />
-          </Route>
-          <Route path={`${path}/addaproduct`}>
+          </AdminRoute>
+          <AdminRoute path={`${path}/addaproduct`}>
             <Addaproduct />
-          </Route>
-          <Route path={`${path}/makeadmin`}>
+          </AdminRoute>
+          <AdminRoute path={`${path}/makeadmin`}>
             <Makeadmin />
-          </Route>
-          <Route path={`${path}/manageproducts`}>
+          </AdminRoute>
+          <AdminRoute path={`${path}/manageproducts`}>
             <Manageproducts />
-          </Route>
+          </AdminRoute>
         </Switch>
       </Box>
     </Box>

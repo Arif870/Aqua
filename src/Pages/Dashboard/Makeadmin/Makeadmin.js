@@ -4,12 +4,10 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function Makeadmin() {
-  const [admin, setAdmin] = useState("");
+  const [email, setEmail] = useState("");
   const adminhandaler = e => {
-    e.preventDefault();
-
-    const user = { admin };
-    fetch("http://localhost:5000/makeamdin", {
+    const user = { email };
+    fetch("http://localhost:5000/users/makeamdin", {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -19,15 +17,12 @@ export default function Makeadmin() {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-
-        if (data.acknowledged === true) {
-          Swal.fire("Good job!", "Admin added successfull", "success");
-        }
       });
+    e.preventDefault();
   };
 
   const blurHandaler = e => {
-    setAdmin(e.target.value);
+    setEmail(e.target.value);
   };
 
   return (

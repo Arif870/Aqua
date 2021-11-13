@@ -19,6 +19,7 @@ const useFirebase = () => {
   const [user, setUser] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [admin, setAdmin] = useState(false);
 
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
@@ -34,6 +35,12 @@ const useFirebase = () => {
       setIsLoading(false);
     });
   }, []);
+  //////////
+  useEffect(() => {
+    fetch(`http://localhost:5000/users/${user.email}`)
+      .then(res => res.json())
+      .then(data => setAdmin(data.admin));
+  }, [user.email]);
   //==================== Google Sign IN
   //
   // Google login
@@ -42,7 +49,9 @@ const useFirebase = () => {
     setIsLoading(true);
     signInWithPopup(auth, googleProvider)
       .then(result => {
-        setUser(result.user);
+        const user = result.user;
+        setUser(user);
+
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -69,6 +78,7 @@ const useFirebase = () => {
       .then(userCredential => {
         const newUser = { email, displayName: name };
         setUser(newUser);
+        savetoDB(email, name);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -130,9 +140,24 @@ const useFirebase = () => {
   };
 
   /////////==========================///////////////
+  const savetoDB = (email, displayName) => {
+    const users = { email, displayName };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(users),
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));
+  };
+
+  /////////==========================///////////////
   //==================== RETURN
   return {
     user,
+    admin,
     error,
     isLoading,
     registerUser,

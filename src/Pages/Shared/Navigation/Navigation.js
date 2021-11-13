@@ -19,7 +19,7 @@ import ReviewsIcon from "@mui/icons-material/Reviews";
 import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural";
 
 export default function Navigation() {
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser, admin } = useAuth();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -106,14 +106,17 @@ export default function Navigation() {
             </Link>
           </MenuItem>
           <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <DashboardIcon fontSize="small" />
-            </ListItemIcon>
-            <Link to="/dashboard" style={{ textDecoration: "none" }}>
-              Dashboard
-            </Link>
-          </MenuItem>
+          {admin && (
+            <MenuItem>
+              <ListItemIcon>
+                <DashboardIcon fontSize="small" />
+              </ListItemIcon>
+              <Link to="/dashboard" style={{ textDecoration: "none" }}>
+                Dashboard
+              </Link>
+            </MenuItem>
+          )}
+
           <MenuItem>
             <ListItemIcon>
               <PaymentIcon fontSize="small" />
